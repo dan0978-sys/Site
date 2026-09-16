@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[CYBER_HEURISTICAS] - Daniel Ferreira</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Share Tech Mono', monospace; background-color: #05050a; background-image: radial-gradient(circle at 50% 10%, rgba(0, 240, 255, 0.12) 0%, transparent 60%), linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px); background-size: 100% 100%, 30px 30px, 30px 30px; color: #e0f7fa; line-height: 1.6; font-size: 1.05em; padding-bottom: 30px; }
+        
+        #cyber-loader { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: #05050a; background-image: radial-gradient(circle at 50% 50%, rgba(255, 0, 85, 0.2) 0%, transparent 70%), linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px); background-size: 100% 100%, 20px 20px, 20px 20px; display: flex; justify-content: center; align-items: center; z-index: 99999; opacity: 1; visibility: visible; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        #cyber-loader.loader-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-box { width: 85%; max-width: 480px; padding: 30px; background: rgba(13, 13, 24, 0.95); border: 2px solid #00f0ff; box-shadow: 0 0 30px rgba(0, 240, 255, 0.4); clip-path: polygon(0 0, 92% 0, 100% 12%, 100% 100%, 8% 100%, 0 88%); text-align: center; }
+        .loader-title { font-family: 'Orbitron', sans-serif; color: #fcee0a; font-size: 1em; letter-spacing: 2px; margin-bottom: 15px; text-shadow: 0 0 10px #fcee0a; }
+        .bar-border { width: 100%; height: 22px; background: #000; border: 1px solid #ff0055; padding: 3px; box-shadow: 0 0 12px rgba(255, 0, 85, 0.4); }
+        .bar-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ff0055, #00f0ff); box-shadow: 0 0 15px #00f0ff; transition: width 0.08s linear; }
+        .loader-status { font-family: 'Share Tech Mono', monospace; color: #00f0ff; font-size: 0.9em; margin-top: 12px; letter-spacing: 1px; }
+
+        header { background: rgba(13, 13, 24, 0.95); border-bottom: 3px solid #ff0055; padding: 20px; text-align: center; box-shadow: 0 0 25px rgba(255, 0, 85, 0.4); }
+        header h1 { font-family: 'Orbitron', sans-serif; color: #fcee0a; letter-spacing: 3px; font-size: 2.2em; text-shadow: 2px 2px 0px #ff0055, -2px -2px 0px #00f0ff; }
+        nav { display: flex; justify-content: center; gap: 12px; padding: 12px; background: #000000; border-bottom: 2px solid #00f0ff; position: sticky; top: 0; z-index: 100; }
+        nav a { font-family: 'Orbitron', sans-serif; color: #fcee0a; text-decoration: none; padding: 8px 18px; border: 1px solid #fcee0a; background: rgba(252, 238, 10, 0.05); clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); font-size: 0.9em; transition: all 0.3s ease; }
+        nav a:hover, nav a.active { background: #ff0055; color: #ffffff; border-color: #ff0055; box-shadow: 0 0 18px #ff0055; }
+        .container { max-width: 1400px; margin: 30px auto; padding: 0 25px; animation: fadeInUp 0.6s ease-out forwards; }
+        .section-header-title { font-family: 'Orbitron', sans-serif; font-size: 1.6em; color: #fcee0a; background: rgba(0, 240, 255, 0.1); border-left: 5px solid #ff0055; padding: 12px 20px; margin-bottom: 25px; letter-spacing: 1px; text-shadow: 0 0 10px rgba(0, 240, 255, 0.4); }
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .card-box { background: rgba(13, 13, 24, 0.9); border: 1px solid rgba(0, 240, 255, 0.4); border-radius: 8px; padding: 20px; box-shadow: 0 0 15px rgba(0, 240, 255, 0.15); transition: all 0.3s ease; display: flex; flex-direction: column; }
+        .card-box:hover { transform: translateY(-4px); border-color: #ff0055; box-shadow: 0 0 20px rgba(255, 0, 85, 0.4); }
+        .card-title { font-family: 'Orbitron', sans-serif; color: #00f0ff; font-size: 1.15em; margin-bottom: 12px; border-bottom: 1px solid rgba(0, 240, 255, 0.3); padding-bottom: 6px; }
+        .card-media { width: 100%; height: 180px; object-fit: cover; border-radius: 6px; margin-bottom: 12px; border: 1px solid rgba(0, 240, 255, 0.4); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        footer { text-align: center; padding: 20px; color: #00f0ff; border-top: 2px solid #ff0055; background: #0d0d18; font-family: 'Orbitron', sans-serif; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div id="cyber-loader">
+        <div class="loader-box">
+            <div class="loader-title">// REDIRECTING_NEURAL_LINK...</div>
+            <div class="bar-border"><div class="bar-fill" id="cyber-bar"></div></div>
+            <div class="loader-status">DATA TRANSFER: <span id="cyber-perc">0%</span></div>
+        </div>
+    </div>
+
+    <header><h1>// SYSTEM_UX/UI_DESIGN</h1></header>
+    
+    <nav>
+        <a href="index.html">CORE_INDEX</a>
+        <a href="ihc.html">1. IHC</a>
+        <a href="design_thinking.html">2. DESIGN THINKING</a>
+        <a href="heuristicas.html" class="active">3. HEURÍSTICAS</a>
+        <a href="wcag.html">4. WCAG & CORES</a>
+        <a href="ux_ui_dev.html">5. UX/UI DEV</a>
+    </nav>
+
+    <div class="container">
+        <div class="section-header-title">// 3. AS 10 HEURÍSTICAS DE NIELSEN</div>
+
+        <div class="grid-cards">
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Status">
+                <div class="card-title">1. Visibilidade do Status</div>
+                <p>O sistema mantém o usuário informado sobre o que está acontecendo em tempo real.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Mundo Real">
+                <div class="card-title">2. Mundo Real</div>
+                <p>Uso de palavras e conceitos familiares ao usuário em vez de termos técnicos.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Controle">
+                <div class="card-title">3. Controle e Liberdade</div>
+                <p>Garantia de opções rápidas para desfazer ou refazer ações acidentais.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Consistência">
+                <div class="card-title">4. Consistência</div>
+                <p>Elementos parecidos devem funcionar da mesma forma em toda a aplicação.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Prevenção de Erros">
+                <div class="card-title">5. Prevenção de Erros</div>
+                <p>Criação de mecanismos de verificação para evitar que erros aconteçam.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Reconhecimento">
+                <div class="card-title">6. Reconhecimento</div>
+                <p>Tornar opções visíveis sem exigir que o usuário memorize instruções.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Eficiência">
+                <div class="card-title">7. Eficiência</div>
+                <p>Atalhos e personalizações que aceleram a navegação de usuários experientes.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Design Minimalista">
+                <div class="card-title">8. Minimalismo</div>
+                <p>Exibição apenas das informações essenciais para não sobrecarregar a visualização.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Diagnóstico">
+                <div class="card-title">9. Diagnóstico de Erros</div>
+                <p>Mensagens claras que explicam o problema e sugerem soluções práticas.</p>
+            </div>
+            <div class="card-box">
+                <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop" class="card-media" alt="Ajuda">
+                <div class="card-title">10. Ajuda e Suporte</div>
+                <p>Suporte fácil de consultar e focado na tarefa imediata do usuário.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer><p>[SYS_LOG]: OPERADOR: DANIEL FERREIRA | RA: 22610845 &copy; 2026</p></footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('cyber-loader');
+            const bar = document.getElementById('cyber-bar');
+            const perc = document.getElementById('cyber-perc');
+            bar.style.width = '100%';
+            perc.textContent = '100%';
+            setTimeout(() => { loader.classList.add('loader-hidden'); }, 250);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const targetUrl = link.getAttribute('href');
+                    if (targetUrl && targetUrl !== '#' && !link.classList.contains('active')) {
+                        e.preventDefault();
+                        const loader = document.getElementById('cyber-loader');
+                        const bar = document.getElementById('cyber-bar');
+                        const perc = document.getElementById('cyber-perc');
+
+                        bar.style.width = '0%';
+                        perc.textContent = '0%';
+                        loader.classList.remove('loader-hidden');
+
+                        let progress = 0;
+                        const interval = setInterval(() => {
+                            progress += 20;
+                            bar.style.width = progress + '%';
+                            perc.textContent = progress + '%';
+                            if (progress >= 100) {
+                                clearInterval(interval);
+                                window.location.href = targetUrl;
+                            }
+                        }, 50);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
